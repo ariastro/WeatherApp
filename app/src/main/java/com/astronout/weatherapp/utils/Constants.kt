@@ -12,7 +12,7 @@ object Constants {
     const val LANGUAGE_ID = "id"
     const val COUNTRY_CODE_ID = "ID"
 
-    const val NO_INTERNET_CONNECTION = "Gagal Terkoneksi dengan Server!"
+    const val NO_INTERNET_CONNECTION = "Can't reach server. Check your internet connection!"
 
     const val METRIC = "metric"
 

@@ -6,6 +6,6 @@ import com.astronout.weatherapp.utils.Constants.METRIC
 
 class RemoteRepository(private val apiHelper: ApiHelper) {
 
-    suspend fun getWeather(city: String) = apiHelper.getWeather(city, BuildConfig.API_KEY, METRIC)
+    suspend fun getWeather(latitude: String, longitude: String) = apiHelper.getWeather(latitude, longitude, BuildConfig.API_KEY, METRIC)
 
 }

@@ -5,6 +5,6 @@ import retrofit2.Response
 
 interface ApiHelper {
 
-    suspend fun getWeather(city: String, apiKey: String, units: String): Response<GetWeatherResponseModel>
+    suspend fun getWeather(latitude: String, longitude: String, apiKey: String, units: String): Response<GetWeatherResponseModel>
 
 }

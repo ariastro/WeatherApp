@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Build
 import android.view.View
 import android.widget.Toast
@@ -36,7 +37,12 @@ fun Context.showWarningToasty(message: String) {
     Toasty.warning(this, message, Toast.LENGTH_SHORT, true).show()
 }
 
-fun Activity.checkPermissionForLocation(context: Context, REQUEST_PERMISSION_STORAGE: Int): Boolean {
+fun Activity.checkLocationSetting(): Boolean {
+    val locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+}
+
+fun Activity.hasPermissionLocation(context: Context, REQUEST_PERMISSION_CODE: Int): Boolean {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
         if (context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) ==
@@ -46,7 +52,7 @@ fun Activity.checkPermissionForLocation(context: Context, REQUEST_PERMISSION_STO
             // Show the permission request
             ActivityCompat.requestPermissions(
                 this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                REQUEST_PERMISSION_STORAGE
+                REQUEST_PERMISSION_CODE
             )
             false
         }
@@ -65,6 +71,7 @@ fun getWeatherIcon(weather: String?): Int {
         "Atmosphere" -> weatherIcon = R.drawable.weather_clear
         "Clear" -> weatherIcon = R.drawable.weather_clear
         "Clouds" -> weatherIcon = R.drawable.weather_cloud
+        "Haze" -> weatherIcon = R.drawable.weather_cloud
         "Extreme" -> weatherIcon = R.drawable.weather_thunderstorm
     }
     return weatherIcon!!

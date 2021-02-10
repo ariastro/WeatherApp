@@ -7,7 +7,8 @@ import retrofit2.http.*
 interface ApiService {
 
     @GET("weather")
-    suspend fun getWeather(@Query("q") city: String,
+    suspend fun getWeather(@Query("lat") latitude: String,
+                           @Query("lon") longitude: String,
                            @Query("appid") apiKey: String,
                            @Query("units") units: String) : Response<GetWeatherResponseModel>
 

@@ -5,7 +5,7 @@ import retrofit2.Response
 
 class ApiHelperImpl(private val apiService: ApiService) : ApiHelper {
 
-    override suspend fun getWeather(city: String, apiKey: String, units: String): Response<GetWeatherResponseModel> =
-        apiService.getWeather(city, apiKey, units)
+    override suspend fun getWeather(latitude: String, longitude: String, apiKey: String, units: String): Response<GetWeatherResponseModel> =
+        apiService.getWeather(latitude, longitude, apiKey, units)
 
 }

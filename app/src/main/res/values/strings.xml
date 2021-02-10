@@ -5,4 +5,7 @@
     <string name="humidity_percentage">%1$s%%</string>
     <string name="wind_speed">%1$sm/s</string>
     <string name="current_location">%1$s, %2$s</string>
+	<string name="dash">-</string>
+	<string name="permission_denied">Permission Denied!</string>
+    <string name="failed_to_get_location">Failed to get location!</string>
 </resources>
