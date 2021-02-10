@@ -40,9 +40,11 @@ android {
     productFlavors {
         development {
             buildConfigField "String", 'BASE_URL', BASE_URL
+            buildConfigField "String", 'API_KEY', API_KEY
         }
         production {
             buildConfigField "String", 'BASE_URL', BASE_URL
+            buildConfigField "String", 'API_KEY', API_KEY
         }
     }
     packagingOptions {

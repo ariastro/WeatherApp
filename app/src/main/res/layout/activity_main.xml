@@ -1,18 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	tools:context=".MainActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-	<TextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="Hello World!"
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintLeft_toLeftOf="parent"
-		app:layout_constraintRight_toRightOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
+    <data>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </data>
+
+    <LinearLayout
+		android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:background="@drawable/morning"
+        android:orientation="vertical"
+        tools:context=".ui.main.view.MainActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_12sdp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    app:srcCompat="@drawable/ic_cloud"
+                    app:tint="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+					android:id="@+id/cloud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/comfortaa_medium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="75%" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    app:srcCompat="@drawable/ic_wind"
+                    app:tint="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+					android:id="@+id/wind_speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+					android:fontFamily="@font/comfortaa_medium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="3.1m/s" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical|end"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    app:srcCompat="@drawable/ic_humidity"
+                    app:tint="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+					android:id="@+id/humidity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+					android:fontFamily="@font/comfortaa_medium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="74%" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/_12sdp"
+			android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatTextView
+				android:id="@+id/temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/white"
+				android:layout_centerHorizontal="true"
+                android:textSize="@dimen/_70ssp"
+                tools:text="24.0" />
+
+			<androidx.appcompat.widget.AppCompatTextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:fontFamily="@font/comfortaa_medium"
+				android:layout_marginTop="@dimen/_12sdp"
+				android:textColor="@color/white"
+				android:layout_toEndOf="@id/temp"
+				android:textSize="@dimen/_24ssp"
+				android:text="@string/celcius" />
+
+        </RelativeLayout>
+
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/location"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:fontFamily="@font/poppins_bold"
+			android:textColor="@color/white"
+			android:textSize="@dimen/_24ssp"
+			tools:text="MALANG, ID" />
+
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/weather"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:fontFamily="@font/poppins_regular"
+			android:textColor="@color/white"
+			android:textSize="@dimen/_20ssp"
+			tools:text="Rain" />
+
+		<androidx.appcompat.widget.AppCompatImageView
+			android:id="@+id/weather_icon"
+			android:layout_width="@dimen/_150sdp"
+			android:layout_height="@dimen/_150sdp"
+			android:layout_marginTop="@dimen/_28sdp"
+			android:layout_gravity="center"
+			tools:src="@drawable/weather_cloud"
+			app:tint="@color/white"/>
+
+    </LinearLayout>
+
+</layout>

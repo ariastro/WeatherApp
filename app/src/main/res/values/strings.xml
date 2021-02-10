@@ -1,3 +1,8 @@
 <resources>
 	<string name="app_name">WeatherApp</string>
+    <string name="celcius">°C</string>
+    <string name="cloud_percentage">%1$s%%</string>
+    <string name="humidity_percentage">%1$s%%</string>
+    <string name="wind_speed">%1$sm/s</string>
+    <string name="current_location">%1$s, %2$s</string>
 </resources>
