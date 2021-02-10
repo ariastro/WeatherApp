@@ -1,10 +1,8 @@
 package com.astronout.weatherapp.ui.main.model
 
-import android.os.Parcelable
+import androidx.annotation.Keep
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import androidx.annotation.Keep
-import kotlinx.android.parcel.Parcelize
 
 @Keep
 @JsonClass(generateAdapter = true)

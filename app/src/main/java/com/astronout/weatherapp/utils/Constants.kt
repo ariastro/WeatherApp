@@ -16,4 +16,6 @@ object Constants {
 
     const val METRIC = "metric"
 
+    const val DATE_FORMAT = "dd MMMM yyyy"
+
 }

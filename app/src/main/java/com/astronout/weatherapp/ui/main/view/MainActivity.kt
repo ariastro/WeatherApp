@@ -8,6 +8,7 @@ import com.astronout.weatherapp.R
 import com.astronout.weatherapp.base.BaseActivity
 import com.astronout.weatherapp.databinding.ActivityMainBinding
 import com.astronout.weatherapp.ui.main.viewmodel.MainViewModel
+import com.astronout.weatherapp.utils.Constants.DATE_FORMAT
 import com.astronout.weatherapp.utils.getWeatherIcon
 import com.astronout.weatherapp.utils.glide.GlideApp
 import com.astronout.weatherapp.utils.showErrorToasty
@@ -26,19 +27,25 @@ class MainActivity : BaseActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        getCurrentDate()
         setupDayNight()
         viewModel.getWeather("Malang")
         observeWeather()
 
     }
 
+    private fun getCurrentDate() {
+        val currentDate = DateTime.now()
+        binding.date.text = currentDate.toString(DATE_FORMAT)
+    }
+
     private fun setupDayNight() {
         when (DateTime().hourOfDay().get()) {
-            in 0..17 -> {
+            in 0..16 -> {
                 binding.parent.background = ContextCompat.getDrawable(this, R.drawable.morning)
                 window.statusBarColor = ContextCompat.getColor(this, R.color.dayStatusBarColor)
             }
-            in 18..24 -> {
+            in 17..24 -> {
                 binding.parent.background = ContextCompat.getDrawable(this, R.drawable.night)
                 window.statusBarColor = ContextCompat.getColor(this, R.color.nightStatusBarColor)
             }
@@ -56,6 +63,7 @@ class MainActivity : BaseActivity() {
                     binding.temp.text = it.data.main.temp.toString()
                     binding.location.text = getString(R.string.current_location, it.data.name, it.data.sys.country)
                     binding.weather.text = it.data.weather.first().main
+                    binding.description.text = it.data.weather.first().description
                     GlideApp.with(this)
                         .load(getWeatherIcon(it.data.weather.first().main))
                         .transition(GenericTransitionOptions.with(android.R.anim.fade_in))
