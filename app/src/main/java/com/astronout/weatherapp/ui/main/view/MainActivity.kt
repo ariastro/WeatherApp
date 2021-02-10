@@ -5,13 +5,14 @@ import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
 import android.content.pm.PackageManager
-import android.location.Geocoder
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.astronout.weatherapp.R
 import com.astronout.weatherapp.base.BaseActivity
+import com.astronout.weatherapp.data.local.entity.CurrentWeather
+import com.astronout.weatherapp.data.local.entity.WEATHER_ID
 import com.astronout.weatherapp.databinding.ActivityMainBinding
 import com.astronout.weatherapp.ui.main.viewmodel.MainViewModel
 import com.astronout.weatherapp.utils.*
@@ -22,12 +23,13 @@ import com.bumptech.glide.GenericTransitionOptions
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import org.joda.time.DateTime
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.util.*
 
 class MainActivity : BaseActivity() {
 
     private val viewModel: MainViewModel by viewModel()
+    private val networkHelper: NetworkHelper by inject()
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -43,16 +45,17 @@ class MainActivity : BaseActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        setupSwipeRefreshLayout()
         checkLocationPermission()
-        getCurrentDate()
         setupDayNight()
-        observeWeather()
+        observeWeatherResponse()
+        observeCurrentWeather()
 
     }
 
     private fun getCurrentWeather(latitude: String, longitude: String) {
-        viewModel.getWeather(latitude, longitude)
+        if (networkHelper.isNetworkConnected()) {
+            viewModel.getWeather(latitude, longitude)
+        }
     }
 
     private fun checkLocationPermission() {
@@ -93,8 +96,8 @@ class MainActivity : BaseActivity() {
                 val result = task.result
                 if (result != null) {
                     getCurrentWeather(
-                        task.result.latitude.toString(),
-                        task.result.longitude.toString()
+                            task.result.latitude.toString(),
+                            task.result.longitude.toString()
                     )
                 } else {
                     val locationRequest = LocationRequest.create()
@@ -109,16 +112,16 @@ class MainActivity : BaseActivity() {
                             }
                             val location = locationResult.lastLocation
                             getCurrentWeather(
-                                location.latitude.toString(),
-                                location.longitude.toString()
+                                    location.latitude.toString(),
+                                    location.longitude.toString()
                             )
                             fusedLocationClient.removeLocationUpdates(locationCallback)
                         }
                     }
                     fusedLocationClient.requestLocationUpdates(
-                        locationRequest,
-                        locationCallback,
-                        null
+                            locationRequest,
+                            locationCallback,
+                            null
                     )
                 }
             } else {
@@ -127,60 +130,44 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun setupSwipeRefreshLayout() {
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            getDeviceLocation()
-            binding.swipeRefreshLayout.isRefreshing = false
-        }
-    }
-
-    private fun getCurrentDate() {
+    private fun getCurrentDate(): String {
         val currentDate = DateTime.now()
-        binding.date.text = currentDate.toString(DATE_FORMAT)
+        return currentDate.toString(DATE_FORMAT)
     }
 
     private fun setupDayNight() {
         when (DateTime().hourOfDay().get()) {
-            in 0..16 -> {
+            in 0..5 -> {
+                binding.parent.background = ContextCompat.getDrawable(this, R.drawable.night)
+                window.statusBarColor = ContextCompat.getColor(this, R.color.nightStatusBarColor)
+            }
+            in 6..17 -> {
                 binding.parent.background = ContextCompat.getDrawable(this, R.drawable.morning)
                 window.statusBarColor = ContextCompat.getColor(this, R.color.dayStatusBarColor)
             }
-            in 17..24 -> {
+            in 18..24 -> {
                 binding.parent.background = ContextCompat.getDrawable(this, R.drawable.night)
                 window.statusBarColor = ContextCompat.getColor(this, R.color.nightStatusBarColor)
             }
         }
     }
 
-    private fun observeWeather() {
-        viewModel.weather.observe(this, Observer {
+    private fun observeWeatherResponse() {
+        viewModel.weatherReponse.observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
                     progress.dismiss()
-                    binding.cloud.text = getString(
-                        R.string.cloud_percentage,
-                        it.data!!.clouds.all.toString()
-                    )
-                    binding.windSpeed.text = getString(
-                        R.string.wind_speed,
-                        it.data.wind.speed.toString()
-                    )
-                    binding.humidity.text = getString(
-                        R.string.humidity_percentage,
-                        it.data.main.humidity.toString()
-                    )
-                    binding.temp.text = it.data.main.temp.toString()
-                    binding.location.text = getString(
-                        R.string.current_location,
-                        it.data.name,
-                        it.data.sys.country
-                    )
-                    binding.weather.text = it.data.weather.first().main
-                    binding.description.text = it.data.weather.first().description
-                    GlideApp.with(this)
-                        .load(getWeatherIcon(it.data.weather.first().main))
-                        .transition(GenericTransitionOptions.with(android.R.anim.fade_in))
-                        .into(binding.weatherIcon)
+                    val result = it.data!!
+                    viewModel.upsertWeather(CurrentWeather(
+                            WEATHER_ID,
+                            getCurrentDate(),
+                            result.wind.speed.toString(),
+                            result.clouds.all.toString(),
+                            result.main.humidity.toString(),
+                            result.main.temp.toString(),
+                            getString(R.string.current_location, it.data.name, it.data.sys.country),
+                            result.weather.first().main,
+                            result.weather.first().description))
                 }
                 Status.ERROR -> {
                     progress.dismiss()
@@ -193,10 +180,29 @@ class MainActivity : BaseActivity() {
         })
     }
 
+    private fun observeCurrentWeather() {
+        viewModel.currentWeather.observe(this, Observer {
+            if (it != null) {
+                binding.date.text = it.date
+                binding.cloud.text = getString(R.string.cloud_percentage, it.cloud)
+                binding.windSpeed.text = getString(R.string.wind_speed, it.windSpeed)
+                binding.humidity.text = getString(R.string.humidity_percentage, it.humidity)
+                binding.temp.text = it.temp
+                binding.location.text = it.location
+                binding.weather.text = it.weather
+                binding.description.text = it.weatherDesc
+                GlideApp.with(this)
+                    .load(getWeatherIcon(it.weather))
+                    .transition(GenericTransitionOptions.with(android.R.anim.fade_in))
+                    .into(binding.weatherIcon)
+            }
+        })
+    }
+
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         when (requestCode) {
             REQUEST_CODE_PERMISSION -> {

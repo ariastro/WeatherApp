@@ -18,4 +18,6 @@ object Constants {
 
     const val DATE_FORMAT = "dd MMMM yyyy"
 
+    const val DATABASE_NAME = "CurrentWeather"
+
 }

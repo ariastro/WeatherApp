@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.astronout.weatherapp.data.local.entity.CurrentWeather
+import com.astronout.weatherapp.data.local.repository.LocalRepository
 import com.astronout.weatherapp.data.remote.repository.RemoteRepository
 import com.astronout.weatherapp.ui.main.model.GetWeatherResponseModel
 import com.astronout.weatherapp.utils.Constants.NO_INTERNET_CONNECTION
@@ -13,31 +15,34 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class MainViewModel(private val repository: RemoteRepository, private val networkHelper: NetworkHelper) : ViewModel() {
+class MainViewModel(private val remoteRepository: RemoteRepository, private val localRepository: LocalRepository, private val networkHelper: NetworkHelper) : ViewModel() {
 
-    private val _weather = MutableLiveData<Resource<GetWeatherResponseModel>>()
-    val weather: LiveData<Resource<GetWeatherResponseModel>>
-        get() = _weather
+    private val _weatherReponse = MutableLiveData<Resource<GetWeatherResponseModel>>()
+    val weatherReponse: LiveData<Resource<GetWeatherResponseModel>>
+        get() = _weatherReponse
 
-    fun getWeather(latitude: String, longitude: String) {
+    val currentWeather = localRepository.getCurrentWeather
+
+    fun upsertWeather(weather: CurrentWeather) {
         viewModelScope.launch(Dispatchers.IO) {
-            _weather.postValue(Resource.loading(null))
-            if (networkHelper.isNetworkConnected()) {
-                try {
-                    repository.getWeather(latitude, longitude).let {
-                        if (it.isSuccessful) {
-                            _weather.postValue(Resource.success(it.body()))
-                        } else {
-                            _weather.postValue(Resource.error(it.errorBody().toString(), null))
-                        }
-                    }
-                } catch (e: Exception) {
-                    _weather.postValue(Resource.error(e.message.toString(), null))
-                }
-            } else {
-                _weather.postValue(Resource.error(NO_INTERNET_CONNECTION, null))
-            }
+            localRepository.upsertWeather(weather)
         }
     }
 
+    fun getWeather(latitude: String, longitude: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _weatherReponse.postValue(Resource.loading(null))
+            try {
+                remoteRepository.getWeather(latitude, longitude).let {
+                    if (it.isSuccessful) {
+                        _weatherReponse.postValue(Resource.success(it.body()))
+                    } else {
+                        _weatherReponse.postValue(Resource.error(it.errorBody().toString(), null))
+                    }
+                }
+            } catch (e: Exception) {
+                _weatherReponse.postValue(Resource.error(e.message.toString(), null))
+            }
+        }
+    }
 }

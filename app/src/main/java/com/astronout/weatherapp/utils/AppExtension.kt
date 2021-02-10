@@ -37,21 +37,16 @@ fun Context.showWarningToasty(message: String) {
     Toasty.warning(this, message, Toast.LENGTH_SHORT, true).show()
 }
 
-fun Activity.checkLocationSetting(): Boolean {
-    val locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-    return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-}
-
 fun Activity.hasPermissionLocation(context: Context, REQUEST_PERMISSION_CODE: Int): Boolean {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-        if (context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) ==
+        if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
             true
         } else {
             // Show the permission request
             ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 REQUEST_PERMISSION_CODE
             )
             false
