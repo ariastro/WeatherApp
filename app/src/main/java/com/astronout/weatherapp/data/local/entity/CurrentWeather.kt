@@ -4,8 +4,7 @@ import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
-const val WEATHER_ID = 0
+import com.astronout.weatherapp.utils.Constants.WEATHER_ID
 
 @Keep
 @Entity(tableName = "current_weather")

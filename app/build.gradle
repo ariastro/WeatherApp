@@ -106,34 +106,18 @@ dependencies {
     // Test helpers
     testImplementation "androidx.room:room-testing:$roomVersion"
 
-    // Bottom Sheet
-    implementation "com.github.andrefrsousa:SuperBottomSheet:$bottomSheetVersion"
-
     // multidex
     implementation "com.android.support:multidex:$multidexVersion"
-
-    // Material dialog
-    implementation "com.afollestad.material-dialogs:core:$materialDialogVersion"
-    implementation "com.afollestad.material-dialogs:datetime:$materialDialogVersion"
 
     // glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
     kapt "com.github.bumptech.glide:compiler:$glideVersion"
 
-    // circle imageview
-    implementation "de.hdodenhof:circleimageview:$circleimageviewVersion"
-
     // toasty
     implementation "com.github.GrenderG:Toasty:$toastyVersion"
 
     implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
-
-    // timber
-    implementation "com.jakewharton.timber:timber:$timberVersion"
-
-    // dexter
-    implementation "com.karumi:dexter:$dexterVersion"
 
     // koin
     implementation "org.koin:koin-android-viewmodel:$koinVersion"

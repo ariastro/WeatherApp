@@ -20,4 +20,6 @@ object Constants {
 
     const val DATABASE_NAME = "CurrentWeather"
 
+    const val WEATHER_ID = 0
+
 }

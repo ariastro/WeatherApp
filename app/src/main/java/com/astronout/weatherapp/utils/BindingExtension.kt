@@ -7,18 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import com.astronout.weatherapp.R
 import com.astronout.weatherapp.utils.glide.GlideApp
 import com.bumptech.glide.GenericTransitionOptions
-import de.hdodenhof.circleimageview.CircleImageView
 
 @BindingAdapter("setImageUrl")
 fun AppCompatImageView.setImageUrl(imageUrl: String?) {
-    GlideApp.with(context)
-        .load(imageUrl)
-        .transition(GenericTransitionOptions.with(android.R.anim.fade_in))
-        .into(this)
-}
-
-@BindingAdapter("setCircleImageUrl")
-fun CircleImageView.setCircleImageUrl(imageUrl: String?) {
     GlideApp.with(context)
         .load(imageUrl)
         .transition(GenericTransitionOptions.with(android.R.anim.fade_in))

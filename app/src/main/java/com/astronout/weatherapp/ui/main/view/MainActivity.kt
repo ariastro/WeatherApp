@@ -12,11 +12,11 @@ import androidx.lifecycle.Observer
 import com.astronout.weatherapp.R
 import com.astronout.weatherapp.base.BaseActivity
 import com.astronout.weatherapp.data.local.entity.CurrentWeather
-import com.astronout.weatherapp.data.local.entity.WEATHER_ID
 import com.astronout.weatherapp.databinding.ActivityMainBinding
 import com.astronout.weatherapp.ui.main.viewmodel.MainViewModel
 import com.astronout.weatherapp.utils.*
 import com.astronout.weatherapp.utils.Constants.DATE_FORMAT
+import com.astronout.weatherapp.utils.Constants.WEATHER_ID
 import com.astronout.weatherapp.utils.glide.GlideApp
 import com.astronout.weatherapp.vo.Status
 import com.bumptech.glide.GenericTransitionOptions
