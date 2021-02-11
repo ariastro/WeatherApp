@@ -153,7 +153,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun observeWeatherResponse() {
-        viewModel.weatherReponse.observe(this, Observer {
+        viewModel.weatherResponse.observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
                     progress.dismiss()

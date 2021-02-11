@@ -8,17 +8,15 @@ import com.astronout.weatherapp.data.local.entity.CurrentWeather
 import com.astronout.weatherapp.data.local.repository.LocalRepository
 import com.astronout.weatherapp.data.remote.repository.RemoteRepository
 import com.astronout.weatherapp.ui.main.model.GetWeatherResponseModel
-import com.astronout.weatherapp.utils.Constants.NO_INTERNET_CONNECTION
-import com.astronout.weatherapp.utils.NetworkHelper
 import com.astronout.weatherapp.vo.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class MainViewModel(private val remoteRepository: RemoteRepository, private val localRepository: LocalRepository, private val networkHelper: NetworkHelper) : ViewModel() {
+class MainViewModel(private val remoteRepository: RemoteRepository, private val localRepository: LocalRepository) : ViewModel() {
 
     private val _weatherReponse = MutableLiveData<Resource<GetWeatherResponseModel>>()
-    val weatherReponse: LiveData<Resource<GetWeatherResponseModel>>
+    val weatherResponse: LiveData<Resource<GetWeatherResponseModel>>
         get() = _weatherReponse
 
     val currentWeather = localRepository.getCurrentWeather

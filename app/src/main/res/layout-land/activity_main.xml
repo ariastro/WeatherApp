@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+	<LinearLayout
+		android:id="@+id/parent"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		tools:background="@drawable/morning"
+		android:orientation="vertical"
+		tools:context=".ui.main.view.MainActivity">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/_12sdp"
+			android:baselineAligned="false"
+			android:orientation="horizontal"
+			android:weightSum="3">
+
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center_vertical"
+				android:orientation="horizontal">
+
+				<androidx.appcompat.widget.AppCompatImageView
+					android:layout_width="@dimen/_40sdp"
+					android:layout_height="@dimen/_40sdp"
+					app:srcCompat="@drawable/ic_cloud"
+					app:tint="@color/colorPrimary" />
+
+				<androidx.appcompat.widget.AppCompatTextView
+					android:id="@+id/cloud"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/comfortaa_medium"
+					android:textColor="@color/colorPrimary"
+					android:textSize="@dimen/_12ssp"
+					tools:text="75%" />
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center"
+				android:orientation="horizontal">
+
+				<androidx.appcompat.widget.AppCompatImageView
+					android:layout_width="@dimen/_40sdp"
+					android:layout_height="@dimen/_40sdp"
+					app:srcCompat="@drawable/ic_wind"
+					app:tint="@color/colorPrimary" />
+
+				<androidx.appcompat.widget.AppCompatTextView
+					android:id="@+id/wind_speed"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/comfortaa_medium"
+					android:textColor="@color/colorPrimary"
+					android:textSize="@dimen/_12ssp"
+					tools:text="3.1m/s" />
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:gravity="center_vertical|end"
+				android:orientation="horizontal">
+
+				<androidx.appcompat.widget.AppCompatImageView
+					android:layout_width="@dimen/_40sdp"
+					android:layout_height="@dimen/_40sdp"
+					app:srcCompat="@drawable/ic_humidity"
+					app:tint="@color/colorPrimary" />
+
+				<androidx.appcompat.widget.AppCompatTextView
+					android:id="@+id/humidity"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/comfortaa_medium"
+					android:textColor="@color/colorPrimary"
+					android:textSize="@dimen/_12ssp"
+					tools:text="74%" />
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:weightSum="2"
+			android:orientation="horizontal">
+
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<androidx.appcompat.widget.AppCompatTextView
+					android:id="@+id/date"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:fontFamily="@font/comfortaa_medium"
+					android:textColor="@color/colorPrimary"
+					android:textSize="@dimen/_14ssp"
+					tools:text="10 February 2021" />
+
+				<RelativeLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:orientation="horizontal">
+
+					<androidx.appcompat.widget.AppCompatTextView
+						android:id="@+id/temp"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/comfortaa_semibold"
+						android:textColor="@color/colorPrimary"
+						android:textSize="@dimen/_70ssp"
+						tools:text="24.0" />
+
+					<androidx.appcompat.widget.AppCompatTextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/comfortaa_medium"
+						android:layout_marginTop="@dimen/_12sdp"
+						android:textColor="@color/colorPrimary"
+						android:layout_toEndOf="@id/temp"
+						android:textSize="@dimen/_16ssp"
+						android:text="@string/celcius" />
+
+				</RelativeLayout>
+
+				<androidx.appcompat.widget.AppCompatTextView
+					android:id="@+id/location"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:fontFamily="@font/poppins_medium"
+					android:textColor="@color/colorPrimary"
+					android:textSize="@dimen/_24ssp"
+					tools:text="Malang, ID" />
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_weight="1"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<androidx.appcompat.widget.AppCompatTextView
+					android:id="@+id/weather"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:fontFamily="@font/comfortaa_medium"
+					android:textColor="@color/colorPrimary"
+					android:textSize="@dimen/_20ssp"
+					tools:text="Rain" />
+
+				<androidx.appcompat.widget.AppCompatTextView
+					android:id="@+id/description"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center"
+					android:fontFamily="@font/comfortaa_medium"
+					android:textColor="@color/colorPrimary"
+					android:textSize="@dimen/_14ssp"
+					tools:text="light rain" />
+
+				<androidx.appcompat.widget.AppCompatImageView
+					android:id="@+id/weather_icon"
+					android:layout_width="@dimen/_120sdp"
+					android:layout_height="@dimen/_120sdp"
+					android:layout_marginTop="@dimen/_12sdp"
+					android:layout_gravity="center"
+					tools:src="@drawable/weather_rainy"
+					app:tint="@color/colorPrimary"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</layout>
