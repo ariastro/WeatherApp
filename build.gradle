@@ -20,6 +20,7 @@ buildscript {
         imageSupportVersion = "1.0.5"
         moshiVersion = "1.11.0"
         koinVersion = "2.1.6"
+        lottieVersion = "3.4.0"
     }
     repositories {
         google()

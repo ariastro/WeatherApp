@@ -126,4 +126,7 @@ dependencies {
     // jodatime
     implementation "net.danlew:android.joda:$jodaTimeVersion"
 
+    // Lottie - Animation
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+
 }
